@@ -17,13 +17,30 @@
 </head>
 
 <body>
-  <div class="container"> <!-- Styling class from Materialize -->
+  {{> _header}}
+  <!-- nav bar, put together with Materialize -->
+  {{> _add_btn}}
+  <div class="container">
+    <!-- Styling class from Materialize -->
     {{{body}}}
   </div>
 
 
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+  <!-- CK Editor - Used to get a WYSIWYG editor for the story creation form -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.17.1/ckeditor.js" integrity="sha512-VXEKi5eNc7ECuyIueuledlqeUWiJ7hcxBe9fnsCiVzeZ0XwJxAPemnq01/LBIBnp3i0szhvKNd9Us7fqNPsRmQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script>
+    M.Sidenav.init(document.querySelector('.sidenav')); // Need to initialize the sidenav fro Materialize
+    M.FormSelect.init(document.querySelector('#status')); // Need to initialize status (for the add story layout) (Materialize)
+    
+    CKEDITOR.replace('body', {
+      plugins: 'wysiwygarea, toolbar, basicstyles, link'
+    }); // Initialize ckeditor for the form field named 'body'
+  </script>
+
 </body>
 
 </html>
