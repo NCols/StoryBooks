@@ -31,10 +31,16 @@ if (process.env.NODE_ENV == 'development') { // Only if in dev mode
     app.use(morgan('dev')) // This will print some info in the console when we're running app in dev mode
 }
 
+// Handlebars Helpers
+const { formatDate} = require('./helpers/hbs');
+
 // Handlebars - more info on https://www.npmjs.com/package/express-handlebars
 app.engine(
     '.hbs',
     engine({
+        helpers: {
+            formatDate // We apply this helper to createdAt in dashboard.hbs
+        },
       defaultLayout: 'main',
       extname: '.hbs',
     })
