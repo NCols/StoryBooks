@@ -32,7 +32,7 @@ if (process.env.NODE_ENV == 'development') { // Only if in dev mode
 }
 
 // Handlebars Helpers
-const { formatDate, stripTags, truncate } = require('./helpers/hbs');
+const { formatDate, stripTags, truncate, editIcon, select } = require('./helpers/hbs');
 
 // Handlebars - more info on https://www.npmjs.com/package/express-handlebars
 app.engine(
@@ -41,7 +41,9 @@ app.engine(
         helpers: {
             formatDate,
             stripTags,
-            truncate // We apply this helper to createdAt in dashboard.hbs
+            truncate, // We apply this helper to createdAt in dashboard.hbs
+            editIcon,
+            select
         },
       defaultLayout: 'main',
       extname: '.hbs',
@@ -61,7 +63,11 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-
+// Set global variable
+app.use(function(req, res, next) {
+    res.locals.user = req.user || null; // Allows us to access 'user' (as in logged in user, not user info linked to a story) from within our templates
+    next();
+});
 
 // Static folder
 app.use(express.static(path.join(__dirname, 'public')));

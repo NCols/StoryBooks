@@ -1,10 +1,10 @@
 <h1>Stories</h1>
 <div class="row">
-    {{#each stories}}
+    {{#each stories}} <!-- We're entering the loop with individual 'stories' here. So below, 'user', 'body' etc refer to the storie's info -->
     <div class="col s12 m4">
         <div class="card">
             <div class="card-image">
-                {{!-- todo: editIcon --}}
+                {{{editIcon user ../user _id}}} <!-- '../user is going out of the 'stories' loop, and go grab the info of the logged in user, not stories.user. We also need triple { } here to parse html -->
             </div>
             <div class="card-content center-align">
                 <h5>{{title}}</h5>
