@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const morgan = require('morgan'); // Logging module
 const { engine } = require('express-handlebars'); // Our view engine, in the net nina tutorial we used ejs. Not sure yet why the brackets notation
+const methodOverride = require('method-override'); // To be able to send PUT and DELETE requests from our forms
 const passport = require('passport');
 const session = require('express-session');
 const MongoStore = require('connect-mongo'); // Goal is to be able to save a session to the db, so that a user doesn't get disconnected when the server is restarted.
@@ -24,6 +25,16 @@ const app = express();
 // Body parser middleware (to extract info from the POST form)
 app.use(express.urlencoded({ extended: false}));
 app.use(express.json());
+
+// Method override - Used to change POST request to a PUT or DEL request. Code snippet copied from documentation.
+app.use(methodOverride(function (req, res) {
+    if (req.body && typeof req.body == 'object' && '_method' in req.body) {
+        // look in urlencoded POST bodies and delete it
+        let method = req.body._method
+        delete req.body._method
+        return method
+    }
+}))
 
 
 // Logging
